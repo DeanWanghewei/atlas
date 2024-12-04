@@ -290,6 +290,6 @@ public class CreateHiveProcess extends BaseHiveEvent {
             && (context.getHiveOperation().equals(HiveOperation.CREATETABLE_AS_SELECT)
              || context.getHiveOperation().equals(HiveOperation.CREATEVIEW)
              || context.getHiveOperation().equals(HiveOperation.ALTERVIEW_AS)
-             || context.getHiveOperation().equals(HiveOperation.CREATE_MATERIALIZED_VIEW));
+             );
     }
 }

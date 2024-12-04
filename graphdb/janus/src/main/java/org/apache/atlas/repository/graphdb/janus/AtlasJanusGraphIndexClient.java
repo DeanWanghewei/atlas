@@ -384,7 +384,7 @@ public class AtlasJanusGraphIndexClient implements AtlasGraphIndexClient {
     private boolean isSolrHealthy() throws SolrServerException, IOException {
         SolrClient client = Solr6Index.getSolrClient();
 
-        return client != null && client.ping(Constants.VERTEX_INDEX).getStatus() == SOLR_HEALTHY_STATUS;
+        return client != null && client.ping().getStatus() == SOLR_HEALTHY_STATUS;
     }
 
     private boolean isElasticsearchHealthy() throws IOException {

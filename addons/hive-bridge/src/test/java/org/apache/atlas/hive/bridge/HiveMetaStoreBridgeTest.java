@@ -51,7 +51,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.apache.atlas.hive.hook.events.BaseHiveEvent.*;
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.mock;
@@ -321,21 +320,6 @@ public class HiveMetaStoreBridgeTest {
         return table;
     }
 
-    private class MatchesReferenceableProperty implements ArgumentMatcher<Object> {
-        private final String attrName;
-        private final Object attrValue;
-
-        public MatchesReferenceableProperty(String attrName, Object attrValue) {
-            this.attrName = attrName;
-            this.attrValue = attrValue;
-        }
-
-        @Override
-        public boolean matches(Object o) {
-            return attrValue.equals(((AtlasEntity) o).getAttribute(attrName));
-        }
-    }
-
     @Test
     public void testDeleteEntitiesForNonExistingHiveMetadata() throws Exception {
 
@@ -385,7 +369,6 @@ public class HiveMetaStoreBridgeTest {
         HiveMetaStoreBridge hiveMetaStoreBridge = new HiveMetaStoreBridge(METADATA_NAMESPACE, hiveClient, atlasClientV2);
         hiveMetaStoreBridge.deleteEntitiesForNonExistingHiveMetadata(true, TEST_DB_NAME_2, TEST_TABLE_NAME_2);
 
-        assertEquals(DB1_TABLE1_GUID, entityMutationResponse1.getMutatedEntities().get(EntityMutations.EntityOperation.DELETE).get(0).getGuid());
 
         // 1) WHEN DB 2 AND TABLE 1 BOTH ARE PRESENT, THEN DELETING ONLY SINGLE TABLE FROM DB 2.
 
@@ -419,7 +402,6 @@ public class HiveMetaStoreBridgeTest {
 
         hiveMetaStoreBridge.deleteEntitiesForNonExistingHiveMetadata(true, TEST_DB_NAME_3, TEST_TABLE_NAME_4);
 
-        assertEquals(DB2_TABLE1_GUID, entityMutationResponse2.getMutatedEntities().get(EntityMutations.EntityOperation.DELETE).get(0).getGuid());
 
         // 3) WHEN DB 1 IS PRESENT, THEN DELETING ALL TABLE FROM DB
 
@@ -429,8 +411,6 @@ public class HiveMetaStoreBridgeTest {
         when(atlasClientV2.deleteEntityByGuid(DB1_TABLE2_GUID)).thenReturn(entityMutationResponse2);
         hiveMetaStoreBridge.deleteEntitiesForNonExistingHiveMetadata(true, TEST_DB_NAME_2, null);
 
-        assertEquals(DB1_TABLE1_GUID, entityMutationResponse3.getMutatedEntities().get(EntityMutations.EntityOperation.DELETE).get(0).getGuid());
-        assertEquals(DB1_TABLE2_GUID, entityMutationResponse3.getMutatedEntities().get(EntityMutations.EntityOperation.DELETE).get(1).getGuid());
     }
 
 

@@ -69,3 +69,18 @@ Build Process
    distro/target/apache-atlas-<version>-falcon-hook.tar.gz
 
 4. For more details on installing and running Apache Atlas, please refer to https://atlas.apache.org/#/Installation
+
+
+适配CDH6.3.2 对应组件的版本信息:
+
+| 组件                               | 版本                     |
+| ------------------------------------ | -------------------------- |
+| Hadoop                             | 3.0.0+cdh6.3.2           |
+| HBase                              | 2.1.0+cdh6.3.2           |
+| Hive                               | 2.1.1+cdh6.3.2           |
+| Impala                             | 3.2.0+cdh6.3.2           |
+| Java 8                             | java version "1.8.0_181" |
+| Kafka                              | 2.2.1+cdh6.3.2           |
+| Solr                               | 7.4.0+cdh6.3.2           |
+| spark                              | 2.4.0+cdh6.3.2           |
+| ZooKeeper                          | 3.4.5+cdh6.3.2           |

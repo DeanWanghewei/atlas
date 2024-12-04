@@ -18,14 +18,17 @@
 
 package org.apache.atlas.hive.hook;
 
-import org.apache.atlas.model.instance.AtlasEntity;
-import org.apache.atlas.hive.hook.HiveMetastoreHookImpl.HiveMetastoreHook;
-import org.apache.atlas.hive.hook.HiveHook.PreprocessAction;
 import org.apache.atlas.hive.hook.HiveHook.HiveHookObjectNamesCache;
+import org.apache.atlas.hive.hook.HiveHook.PreprocessAction;
+import org.apache.atlas.hive.hook.HiveMetastoreHookImpl.HiveMetastoreHook;
+import org.apache.atlas.model.instance.AtlasEntity;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.hadoop.hive.metastore.IHMSHandler;
 import org.apache.hadoop.hive.metastore.api.Database;
-import org.apache.hadoop.hive.metastore.events.*;
+import org.apache.hadoop.hive.metastore.events.AlterTableEvent;
+import org.apache.hadoop.hive.metastore.events.CreateDatabaseEvent;
+import org.apache.hadoop.hive.metastore.events.CreateTableEvent;
+import org.apache.hadoop.hive.metastore.events.ListenerEvent;
 import org.apache.hadoop.hive.ql.hooks.*;
 import org.apache.hadoop.hive.ql.metadata.Hive;
 import org.apache.hadoop.hive.ql.metadata.Table;
@@ -39,22 +42,22 @@ import static org.apache.atlas.hive.hook.events.BaseHiveEvent.toTable;
 
 
 public class AtlasHiveHookContext {
-    public static final char   QNAME_SEP_METADATA_NAMESPACE = '@';
-    public static final char   QNAME_SEP_ENTITY_NAME        = '.';
-    public static final char   QNAME_SEP_PROCESS            = ':';
-    public static final String TEMP_TABLE_PREFIX            = "_temp-";
-    public static final String CREATE_OPERATION             = "CREATE";
-    public static final String ALTER_OPERATION              = "ALTER";
+    public static final char QNAME_SEP_METADATA_NAMESPACE = '@';
+    public static final char QNAME_SEP_ENTITY_NAME = '.';
+    public static final char QNAME_SEP_PROCESS = ':';
+    public static final String TEMP_TABLE_PREFIX = "_temp-";
+    public static final String CREATE_OPERATION = "CREATE";
+    public static final String ALTER_OPERATION = "ALTER";
 
-    private final HiveHook                 hook;
-    private final HiveOperation            hiveOperation;
-    private final HookContext              hiveContext;
-    private final Hive                     hive;
+    private final HiveHook hook;
+    private final HiveOperation hiveOperation;
+    private final HookContext hiveContext;
+    private final Hive hive;
     private final Map<String, AtlasEntity> qNameEntityMap = new HashMap<>();
     private final HiveHookObjectNamesCache knownObjects;
-    private final HiveMetastoreHook        metastoreHook;
-    private final ListenerEvent            metastoreEvent;
-    private final IHMSHandler              metastoreHandler;
+    private final HiveMetastoreHook metastoreHook;
+    private final ListenerEvent metastoreEvent;
+    private final IHMSHandler metastoreHandler;
 
     private boolean isSkippedInputEntity;
     private boolean isSkippedOutputEntity;
@@ -72,15 +75,15 @@ public class AtlasHiveHookContext {
 
     public AtlasHiveHookContext(HiveHook hook, HiveOperation hiveOperation, HookContext hiveContext, HiveHookObjectNamesCache knownObjects,
                                 HiveMetastoreHook metastoreHook, ListenerEvent listenerEvent, boolean skipTempTables) throws Exception {
-        this.hook             = hook;
-        this.hiveOperation    = hiveOperation;
-        this.hiveContext      = hiveContext;
-        this.hive             = hiveContext != null ? Hive.get(hiveContext.getConf()) : null;
-        this.knownObjects     = knownObjects;
-        this.metastoreHook    = metastoreHook;
-        this.metastoreEvent   = listenerEvent;
-        this.metastoreHandler = (listenerEvent != null) ? metastoreEvent.getIHMSHandler() : null;
-        this.skipTempTables   = skipTempTables;
+        this.hook = hook;
+        this.hiveOperation = hiveOperation;
+        this.hiveContext = hiveContext;
+        this.hive = hiveContext != null ? Hive.get(hiveContext.getConf()) : null;
+        this.knownObjects = knownObjects;
+        this.metastoreHook = metastoreHook;
+        this.metastoreEvent = listenerEvent;
+        this.metastoreHandler = (listenerEvent != null) ? metastoreEvent.getHandler() : null;
+        this.skipTempTables = skipTempTables;
 
         init();
     }
@@ -161,15 +164,21 @@ public class AtlasHiveHookContext {
         return qNameEntityMap.get(qualifiedName);
     }
 
-    public Collection<AtlasEntity> getEntities() { return qNameEntityMap.values(); }
+    public Collection<AtlasEntity> getEntities() {
+        return qNameEntityMap.values();
+    }
 
-    public Map<String, AtlasEntity> getQNameToEntityMap() { return qNameEntityMap; }
+    public Map<String, AtlasEntity> getQNameToEntityMap() {
+        return qNameEntityMap;
+    }
 
     public String getMetadataNamespace() {
         return hook.getMetadataNamespace();
     }
 
-    public String getHostName() { return hook.getHostName(); }
+    public String getHostName() {
+        return hook.getHostName();
+    }
 
     public boolean isConvertHdfsPathToLowerCase() {
         return hook.isConvertHdfsPathToLowerCase();
@@ -195,11 +204,11 @@ public class AtlasHiveHookContext {
         return hook.getIgnoreDummyDatabaseName();
     }
 
-    public  List getIgnoreDummyTableName() {
+    public List getIgnoreDummyTableName() {
         return hook.getIgnoreDummyTableName();
     }
 
-    public  String getIgnoreValuesTmpTableNamePrefix() {
+    public String getIgnoreValuesTmpTableNamePrefix() {
         return hook.getIgnoreValuesTmpTableNamePrefix();
     }
 
@@ -263,16 +272,12 @@ public class AtlasHiveHookContext {
         }
 
         List<Database> databases = new ArrayList<>();
-        List<Table>    tables    = new ArrayList<>();
+        List<Table> tables = new ArrayList<>();
 
         if (isMetastoreHook()) {
             switch (hiveOperation) {
                 case CREATEDATABASE:
                     databases.add(((CreateDatabaseEvent) metastoreEvent).getDatabase());
-                    break;
-                case ALTERDATABASE:
-                    databases.add(((AlterDatabaseEvent) metastoreEvent).getOldDatabase());
-                    databases.add(((AlterDatabaseEvent) metastoreEvent).getNewDatabase());
                     break;
                 case CREATETABLE:
                     tables.add(toTable(((CreateTableEvent) metastoreEvent).getTable()));

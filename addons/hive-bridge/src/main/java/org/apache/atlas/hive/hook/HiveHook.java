@@ -203,25 +203,16 @@ public class HiveHook extends AtlasHook implements ExecuteWithHookContext {
                 case DROPDATABASE:
                     event = new DropDatabase(context);
                 break;
-
-                case ALTERDATABASE:
-                case ALTERDATABASE_OWNER:
-                case ALTERDATABASE_LOCATION:
-                    event = new AlterDatabase(context);
-                break;
-
                 case CREATETABLE:
                     event = new CreateTable(context);
                 break;
 
                 case DROPTABLE:
                 case DROPVIEW:
-                case DROP_MATERIALIZED_VIEW:
                     event = new DropTable(context);
                 break;
 
                 case CREATETABLE_AS_SELECT:
-                case CREATE_MATERIALIZED_VIEW:
                 case CREATEVIEW:
                 case ALTERVIEW_AS:
                 case LOAD:

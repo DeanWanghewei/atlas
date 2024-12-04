@@ -655,10 +655,13 @@
                 </property>
             </activation>
             <properties>
-                <distro.exclude.packages>WEB-INF/lib/je-*.jar,WEB-INF/lib/solr-test-framework-*.jar, WEB-INF/lib/jts-*.jar,WEB-INF/lib/logback-*.jar,WEB-INF/lib/dom4j-*.jar,WEB-INF/lib/ant-*.jar</distro.exclude.packages>
+                <distro.exclude.packages>WEB-INF/lib/je-*.jar,WEB-INF/lib/solr-test-framework-*.jar,
+                    WEB-INF/lib/jts-*.jar,WEB-INF/lib/logback-*.jar,WEB-INF/lib/dom4j-*.jar,WEB-INF/lib/ant-*.jar
+                </distro.exclude.packages>
                 <graph.index.backend>solr</graph.index.backend>
                 <graphArtifact>atlas-graphdb-janus</graphArtifact>
-                <graphdb.backend.impl>org.apache.atlas.repository.graphdb.janus.AtlasJanusGraphDatabase</graphdb.backend.impl>
+                <graphdb.backend.impl>org.apache.atlas.repository.graphdb.janus.AtlasJanusGraphDatabase
+                </graphdb.backend.impl>
                 <graphGroup>org.apache.atlas</graphGroup>
                 <skipDocs>false</skipDocs>
                 <tests.solr.embedded>true</tests.solr.embedded>
@@ -674,10 +677,13 @@
                 </property>
             </activation>
             <properties>
-                <distro.exclude.packages>WEB-INF/lib/je-*.jar,WEB-INF/lib/solr-test-framework-*.jar, WEB-INF/lib/jts-*.jar,WEB-INF/lib/logback-*.jar,WEB-INF/lib/dom4j-*.jar,WEB-INF/lib/ant-*.jar</distro.exclude.packages>
+                <distro.exclude.packages>WEB-INF/lib/je-*.jar,WEB-INF/lib/solr-test-framework-*.jar,
+                    WEB-INF/lib/jts-*.jar,WEB-INF/lib/logback-*.jar,WEB-INF/lib/dom4j-*.jar,WEB-INF/lib/ant-*.jar
+                </distro.exclude.packages>
                 <graph.index.backend>solr</graph.index.backend>
                 <graphArtifact>atlas-graphdb-janus</graphArtifact>
-                <graphdb.backend.impl>org.apache.atlas.repository.graphdb.janus.AtlasJanusGraphDatabase</graphdb.backend.impl>
+                <graphdb.backend.impl>org.apache.atlas.repository.graphdb.janus.AtlasJanusGraphDatabase
+                </graphdb.backend.impl>
                 <graphGroup>org.apache.atlas</graphGroup>
                 <skipDocs>false</skipDocs>
                 <tests.solr.embedded>true</tests.solr.embedded>
@@ -732,9 +738,9 @@
         <guava.version>25.1-jre</guava.version>
         <guice.version>4.1.0</guice.version>
         <hadoop.hdfs-client.version>${hadoop.version}</hadoop.hdfs-client.version>
-        <hadoop.version>3.3.0</hadoop.version>
-        <hbase.version>2.3.3</hbase.version>
-        <hive.version>3.1.2</hive.version>
+        <hadoop.version>3.0.0</hadoop.version>
+        <hbase.version>2.1.0</hbase.version>
+        <hive.version>2.1.1</hive.version>
         <hppc.version>0.8.1</hppc.version>
         <httpcomponents-httpclient.version>4.5.13</httpcomponents-httpclient.version>
         <httpcomponents-httpcore.version>4.4.13</httpcomponents-httpcore.version>
@@ -759,12 +765,12 @@
         <keycloak.version>6.0.1</keycloak.version>
         <log4j.version>1.2.17</log4j.version>
         <log4j2.version>2.17.1</log4j2.version>
-        <lucene-solr.version>8.6.3</lucene-solr.version>
+        <lucene-solr.version>7.4.0</lucene-solr.version>
         <maven-site-plugin.version>3.7</maven-site-plugin.version>
         <MaxPermGen>512m</MaxPermGen>
         <netty.version>4.1.78.Final</netty.version>
-        <node-for-v2.version>v12.16.0</node-for-v2.version>
-        <npm-for-v2.version>6.13.7</npm-for-v2.version>
+        <node-for-v2.version>v16.17.0</node-for-v2.version>
+        <npm-for-v2.version>8.15.0</npm-for-v2.version>
         <opencsv.version>5.0</opencsv.version>
         <paranamer.version>2.7</paranamer.version>
         <PermGen>64m</PermGen>
@@ -783,8 +789,8 @@
         <skipTests>false</skipTests>
         <skipUTs>false</skipUTs>
         <slf4j.version>1.7.30</slf4j.version>
-        <solr-test-framework.version>8.6.3</solr-test-framework.version>
-        <solr.version>8.6.3</solr.version>
+        <solr-test-framework.version>7.4.0</solr-test-framework.version>
+        <solr.version>7.4.0</solr.version>
         <spray.version>1.3.1</spray.version>
         <spring.security.version>5.7.2</spring.security.version>
         <spring.version>5.3.21</spring.version>
@@ -795,7 +801,7 @@
         <testng.version>7.0.0</testng.version>
         <tinkerpop.version>3.5.2</tinkerpop.version>
         <woodstox-core.version>5.0.3</woodstox-core.version>
-        <zookeeper.version>3.5.7</zookeeper.version>
+        <zookeeper.version>3.4.5</zookeeper.version>
     </properties>
 
     <modules>
@@ -819,21 +825,21 @@
         <module>plugin-classloader</module>
         <module>addons/hive-bridge-shim</module>
         <module>addons/hive-bridge</module>
-        <module>addons/falcon-bridge-shim</module>
-        <module>addons/falcon-bridge</module>
-        <module>addons/sqoop-bridge-shim</module>
-        <module>addons/sqoop-bridge</module>
-        <module>addons/storm-bridge-shim</module>
-        <module>addons/storm-bridge</module>
+        <!--        <module>addons/falcon-bridge-shim</module>-->
+        <!--        <module>addons/falcon-bridge</module>-->
+        <!--        <module>addons/sqoop-bridge-shim</module>-->
+        <!--        <module>addons/sqoop-bridge</module>-->
+<!--        <module>addons/storm-bridge-shim</module>-->
+<!--        <module>addons/storm-bridge</module>-->
         <module>addons/hbase-bridge-shim</module>
         <module>addons/hbase-bridge</module>
         <module>addons/hbase-testing-util</module>
         <module>addons/kafka-bridge</module>
         <module>tools/classification-updater</module>
         <module>tools/atlas-index-repair</module>
-        <module>addons/impala-hook-api</module>
-        <module>addons/impala-bridge-shim</module>
-        <module>addons/impala-bridge</module>
+<!--        <module>addons/impala-hook-api</module>-->
+<!--        <module>addons/impala-bridge-shim</module>-->
+<!--        <module>addons/impala-bridge</module>-->
 
         <module>distro</module>
         <module>atlas-examples</module>
@@ -845,6 +851,17 @@
             <url>https://repo1.maven.org/maven2</url>
             <snapshots>
                 <enabled>false</enabled>
+            </snapshots>
+        </repository>
+
+        <repository>
+            <id>aliyun</id>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
             </snapshots>
         </repository>
         <repository>
@@ -863,6 +880,13 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+
+
+        <repository>
+            <id>aliyun-spring</id>
+            <url>https://maven.aliyun.com/repository/spring/</url>
+        </repository>
+
         <repository>
             <id>apache-staging</id>
             <url>https://repository.apache.org/content/groups/staging/</url>
@@ -1008,6 +1032,7 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
 
             <dependency>
                 <groupId>org.apache.hadoop</groupId>
@@ -1523,17 +1548,17 @@
                 <version>${project.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.apache.atlas</groupId>
-                <artifactId>falcon-bridge</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+            <!--            <dependency>-->
+            <!--                <groupId>org.apache.atlas</groupId>-->
+            <!--                <artifactId>falcon-bridge</artifactId>-->
+            <!--                <version>${project.version}</version>-->
+            <!--            </dependency>-->
 
-            <dependency>
-                <groupId>org.apache.atlas</groupId>
-                <artifactId>sqoop-bridge</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+            <!--            <dependency>-->
+            <!--                <groupId>org.apache.atlas</groupId>-->
+            <!--                <artifactId>sqoop-bridge</artifactId>-->
+            <!--                <version>${project.version}</version>-->
+            <!--            </dependency>-->
 
             <dependency>
                 <groupId>org.apache.atlas</groupId>
@@ -1547,17 +1572,17 @@
                 <version>${project.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.apache.atlas</groupId>
-                <artifactId>falcon-bridge-shim</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+            <!--            <dependency>-->
+            <!--                <groupId>org.apache.atlas</groupId>-->
+            <!--                <artifactId>falcon-bridge-shim</artifactId>-->
+            <!--                <version>${project.version}</version>-->
+            <!--            </dependency>-->
 
-            <dependency>
-                <groupId>org.apache.atlas</groupId>
-                <artifactId>sqoop-bridge-shim</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+            <!--            <dependency>-->
+            <!--                <groupId>org.apache.atlas</groupId>-->
+            <!--                <artifactId>sqoop-bridge-shim</artifactId>-->
+            <!--                <version>${project.version}</version>-->
+            <!--            </dependency>-->
 
             <dependency>
                 <groupId>org.apache.atlas</groupId>
@@ -1681,7 +1706,7 @@
                 <version>${project.version}</version>
             </dependency>
 
-          <!-- Fix for cassandra-all tranitive dependency CVE-2017-18640 : https://nvd.nist.gov/vuln/detail/CVE-2017-18640 -->
+            <!-- Fix for cassandra-all tranitive dependency CVE-2017-18640 : https://nvd.nist.gov/vuln/detail/CVE-2017-18640 -->
             <dependency>
                 <groupId>org.yaml</groupId>
                 <artifactId>snakeyaml</artifactId>
@@ -1919,17 +1944,22 @@
                             <rules>
                                 <requireMavenVersion>
                                     <version>[3.5.0,)</version>
-                                    <message>** MAVEN VERSION ERROR ** Maven 3.5.0 or above is required. See https://maven.apache.org/install.html </message>
+                                    <message>** MAVEN VERSION ERROR ** Maven 3.5.0 or above is required. See
+                                        https://maven.apache.org/install.html
+                                    </message>
                                 </requireMavenVersion>
                                 <requireJavaVersion>
                                     <level>ERROR</level>
                                     <version>[1.8.0-151,)</version>
-                                    <message>** JAVA VERSION ERROR ** Java 8 (Update 151) or above is required.</message>
+                                    <message>** JAVA VERSION ERROR ** Java 8 (Update 151) or above is required.
+                                    </message>
                                 </requireJavaVersion>
                                 <requireJavaVersion>
                                     <level>WARN</level>
                                     <version>(,1.9]</version>
-                                    <message>** JAVA VERSION WARNING ** Java 9 and above has not been tested with Atlas.</message>
+                                    <message>** JAVA VERSION WARNING ** Java 9 and above has not been tested with
+                                        Atlas.
+                                    </message>
                                 </requireJavaVersion>
                             </rules>
                         </configuration>
@@ -2135,7 +2165,7 @@
                         <exclude>**/docz-lib/**</exclude>
                         <exclude>**/.docz/**</exclude>
                         <exclude>**/*.svg</exclude>
-                        
+
                     </excludes>
                 </configuration>
                 <executions>

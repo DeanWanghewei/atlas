@@ -24,14 +24,12 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hive.metastore.MetaStoreEventListener;
 import org.apache.hadoop.hive.metastore.api.FieldSchema;
 import org.apache.hadoop.hive.metastore.events.*;
-import org.apache.hadoop.hive.metastore.utils.SecurityUtils;
 import org.apache.hadoop.hive.ql.metadata.Table;
 import org.apache.hadoop.hive.ql.plan.HiveOperation;
 import org.apache.hadoop.hive.shims.Utils;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 import static org.apache.atlas.hive.hook.events.AlterTableRenameCol.findRenamedColumn;
 import static org.apache.atlas.hive.hook.events.BaseHiveEvent.toTable;
@@ -64,12 +62,6 @@ public class HiveMetastoreHookImpl extends MetaStoreEventListener {
         hook.handleEvent(context);
     }
 
-    @Override
-    public void onAlterDatabase(AlterDatabaseEvent dbEvent) {
-        HiveOperationContext context = new HiveOperationContext(ALTERDATABASE, dbEvent);
-
-        hook.handleEvent(context);
-    }
 
     @Override
     public void onCreateTable(CreateTableEvent tableEvent) {
@@ -133,10 +125,6 @@ public class HiveMetastoreHookImpl extends MetaStoreEventListener {
                         event = new DropDatabase(context);
                         break;
 
-                    case ALTERDATABASE:
-                        event = new AlterDatabase(context);
-                        break;
-
                     case CREATETABLE:
                         event = new CreateTable(context);
                         break;
@@ -168,7 +156,7 @@ public class HiveMetastoreHookImpl extends MetaStoreEventListener {
                 }
 
                 if (event != null) {
-                    final UserGroupInformation ugi = SecurityUtils.getUGI() == null ? Utils.getUGI() : SecurityUtils.getUGI();
+                    final UserGroupInformation ugi = Utils.getUGI();
 
                     super.notifyEntities(event.getNotificationMessages(), ugi);
                 }
