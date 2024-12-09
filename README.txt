@@ -49,11 +49,11 @@ Build Process
    # to checkout a tag
      $ git checkout tags/<tag>
 
-2. Execute the following commands to build Apache Atlas
+2. Execute the following commands to build Apache Atlas ,please set java version is jdk8
 
    $ export MAVEN_OPTS="-Xms2g -Xmx2g"
-   $ mvn clean install
-   $ mvn clean package -Pdist
+   $ mvn clean install -DargLine="--add-opens java.base/java.util=ALL-UNNAMED" -DskipTests
+   $ mvn clean package -Pdist -Dmaven.test.skip=true
 
 3. After above build commands successfully complete, you should see the following files
 
