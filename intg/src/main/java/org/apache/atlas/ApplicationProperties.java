@@ -140,6 +140,10 @@ public final class ApplicationProperties extends PropertiesConfiguration {
             }
 
             LOG.info("Loading {} from {}", fileName, url);
+            if (url == null) {
+                // 创建一个空的 Configuration
+                return new PropertiesConfiguration();
+            }
 
             ApplicationProperties appProperties = new ApplicationProperties(url);
 
